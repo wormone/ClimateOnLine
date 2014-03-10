@@ -1,0 +1,89 @@
+{% extends "MYTEMPLATE.html" %}
+
+{% block Script %}
+    function check(){
+        var user = document.getElementById('user').value;
+        var role = document.getElementById('role').value;
+        var name = document.getElementById('name').value;
+        var panel = document.getElementById('panel').value;
+        var pwd = document.getElementById('pwd').value;
+        var cmd = document.getElementById('cmd').value;
+        var x = document.getElementById("mess_cmd");
+        var re_user = /^[0-9a-zA-Z]{2,20}$/; //用户名规则
+        var re_pwd = /^[0-9a-zA-Z]{2,10}$/; //密码规则
+        var re_zh = /^[\u4e00-\u9fa5]+$/; //汉字规则
+        if (cmd == "please")
+            {x.innerHTML = "请选择";return false;}
+        else if (cmd == "search" && user == "")
+            {x.innerHTML = "请输入用户名";return false;}
+        else if (cmd == "register")
+            {if (user==""||role==""||name==""||panel==""||pwd=="")
+                {x.innerHTML = "请填写以下全部信息";return false;}
+             else if (!re_user.test(user))
+                {x.innerHTML = "用户名只允许2-20位的数字字母";return false;}
+             else if (role != "普通用户" && role != "管理员")
+                {x.innerHTML = "用户类型只能是“普通用户”或“管理员”";return false;}
+             else if (!re_zh.test(name))
+                {x.innerHTML = "姓名只允许中文";return false;}
+             else if (!re_zh.test(panel))
+                {x.innerHTML = "单位只允许中文";return false;}
+             else if (!re_pwd.test(pwd))
+                {x.innerHTML = "密码只允许2-10位的数字字母";return false;}
+			 }
+        else if (cmd == "delete" && user == "")
+            {x.innerHTML = "请填写用户名";return false;}
+        else
+            {return true;}
+    }
+{% end %}
+
+{% block Login %}
+    {% module xsrf_form_html() %}
+    欢迎:-) <a href="/user">{{ username }}</a> [<small>管理员<a href="/admin">走这</a></small>]
+	<input type="submit" value="退出">
+{% end %}
+
+{% block Body %}
+    <h2>用户管理</h2>
+    <form action="/admin" method="post" onsubmit="return(check())">
+    {% module xsrf_form_html() %}
+    <table>
+        <tr>
+            <td align="right">*操作:</td>
+            <td align="left"><select id="cmd" name="cmd" style="width:10em">
+                    <option value="please">请选择...</option>
+                    <option value="search">查询用户</option>
+                    <option value="register">注册用户</option>
+                    <option value="delete">删除用户</option>
+                </select>
+            <span id="mess_cmd" style="color:red;"></span></td>
+        </tr>
+        <tr>
+            <td align="right">*用户名:</td>
+            <td align="left"><input type="text" id="user" name="user" size="16" value="{{ user }}" /></td>
+        </tr>
+        <tr>
+            <td align="right">用户类别:</td>
+            <td align="left"><input type="text" id="role" name="role" size="16"
+			     value="{% if role=='1' %}管理员{% end %}{% if role=='0' %}普通用户{% end %}" /></td>
+        </tr>
+        <tr>
+            <td align="right">姓名:</td>
+            <td align="left"><input type="text" id="name" name="name" size="16" value="{{ name }}" /></td>
+        </tr>
+        <tr>
+            <td align="right">单位:</td>
+            <td align="left"><input type="text" id="panel" name="panel" size="16" value="{{ panel }}" /></td>
+        </tr>
+        <tr>
+            <td align="right">密码:</td>
+            <td align="left"><input type="text" id="pwd" name="pwd" size="16" value="{{ pwd }}" /></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td align="left"><input id="admin_submit" type="submit" value="确定">
+            <span class="animated flash">{{ message }}</span></td>
+        </tr>
+    </table>
+    </form>
+{% end %}

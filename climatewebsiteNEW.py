@@ -695,8 +695,8 @@ app = tornado.web.Application([
     (r"/temperature",TemperatureHandler),
     (r"/precipitation",PrecipitationHandler),
     (r"/humidity",HumidityHandler),
-	(r"/windspeed",WindspeedHandler),
-	(r"/sunshine",SunshineHandler),
+    (r"/windspeed",WindspeedHandler),
+    (r"/sunshine",SunshineHandler),
 ],**settings)
 
 ''' MYPORT 须已设定 '''

@@ -1,0 +1,76 @@
+{% extends "MYTEMPLATE.html" %}
+
+{% block Script %}
+    function check(){
+        var oldpass = document.getElementById('oldpass').value;
+        var newpass1 = document.getElementById('newpass1').value;
+        var newpass2 = document.getElementById('newpass2').value;
+        var x = document.getElementById("mess_oldpass");
+        var y = document.getElementById("mess_newpass1");
+        var z = document.getElementById("mess_newpass2");
+        var re=/^[0-9a-zA-Z]{2,10}$/; //只输入数字和字母的正则
+        if (oldpass == "")
+            {x.innerHTML = "请输入旧密码";return false;}
+        else if (newpass1 == "")
+            {y.innerHTML = "请输入新密码";return false;}
+        else if (newpass1.search(re)==-1)
+            {y.innerHTML = "只允许2-10位的数字字母";return false;}
+        else if (newpass2 == "")
+            {z.innerHTML = "请再次输入新密码";return false;}
+        else if (newpass2 != newpass1)
+            {z.innerHTML = "两次输入不一致";return false;}
+        else
+            {return true;}
+    }
+{% end %}
+
+{% block Login %}
+    {% module xsrf_form_html() %}
+    欢迎:-) <a href="/user">{{ username }}</a> [<small>管理员<a href="/admin">走这</a></small>]
+	<input type="submit" value="退出">
+{% end %}
+
+{% block Body %}
+    <h2>账户信息</h2>
+    <form action="/user" method="post" onsubmit="return(check())">
+    {% module xsrf_form_html() %}
+    <table>
+        <tr>
+            <td align="right">用户名:</td>
+            <td align="left">{{ username }}</td>
+        </tr>
+        <tr>
+            <td align="right">用户类别:</td>
+            <td align="left">{% if role=='1' %}管理员{% else %}普通用户{% end %}</td>
+        </tr>
+        <tr>
+            <td align="right">姓名:</td>
+            <td align="left">{{ name }}</td>
+        </tr>
+        <tr>
+            <td align="right">单位:</td>
+            <td align="left">{{ panel }}</td>
+        </tr>
+        <tr>
+            <td align="right">旧密码:</td>
+            <td align="left"><input type="password" id="oldpass" name="oldpass" size="16" value="{{ oldpass }}" />
+            <span id="mess_oldpass" style="color:red;"></span></td>
+        </tr>
+        <tr>
+            <td align="right">新密码:</td>
+            <td align="left"><input type="password" id="newpass1" name="newpass1" size="16"  value="{{ newpass1 }}" />
+            <span id="mess_newpass1" style="color:red;"></span></td>
+        </tr>
+        <tr>
+            <td align="right">确认新密码:</td>
+            <td align="left"><input type="password" id="newpass2" name="newpass2" size="16"  value="{{ newpass2 }}" />
+            <span id="mess_newpass2" style="color:red;"></span></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td align="left"><input id="user_submit" type="submit" value="更改">
+            <span class="animated flash">{{ message }}</span></td>
+        </tr>
+    </table>
+    </form>
+{% end %}

@@ -1,0 +1,93 @@
+{% extends "MYTEMPLATE.html" %}
+
+{% block Login %}
+    {% module xsrf_form_html() %}
+    {% if not t %}
+        <input type="text" required name="username" size="16" value="{{ username }}" placeholder="用户名">
+        <input type="password" required name="passwd" size="16" value="{{ passwd }}" placeholder="密码">
+        <input type="submit" value="登陆">
+        <p class="animated fadeInRight">{{ status }}</p>
+    {% else %}
+        <div class="animated fadeInLeft">
+        欢迎:-) <a href="/user">{{ username }}</a> [<small>管理员<a href="/admin">走这</a></small>]
+        <input type="submit" value="退出">
+        </div>
+    {% end %}
+{% end %}
+
+{% block nav_home %}style="color:#4d8cbf;border-bottom:solid 6px;"{% end %}
+
+{% block Body %}
+    <h2>更新</h2>
+    <ul>
+        <li><b style="color:red;">2014-02-28</b></li>
+            <ol>
+                <li>解决了表单不能保持用户选项的问题</li>
+                <li>增加了 CSS 动态样式</li>
+                <li>上述更新不兼容 IE11 以下版本 :-(</li>
+            </ol>
+        <li><b>2014-02-18</b></li>
+            <ol>
+                <li><b>气温</b>和<b>降水</b>增加了当月数据，历史数据和实时数据合兵一处</li>
+                <li>增加了普通用户密码更改和管理员用户管理功能</li>
+                <li>增加了表单的 JavaScript 验证程序，并保留了服务端的验证程序</li>
+                <li>修改了 CSS，改进外观</li>
+                <li>功能上保持了 IE6+ 的兼容</li>
+                <li>感谢杨姐、阿福、明明、谢主席、郭主任、杨哥和马宁的测试和建议:-)</li>
+                <li>感谢高工的建议，TODO</li>
+            </ol>
+        <li><b>2014-01-26</b></li>
+            <ol>
+                <li>增加了<b>风速</b>、<b>湿度</b>和<b>日照</b>等要素</li>
+                <li>修正了日平均气温统计中三次观测向四次观测转换的算法，感谢高工的指导</li>
+                <li>修正了降水统计中缺测处理的一处错误，感谢明明的测试</li>
+                <li>感谢杨哥和李春的测试:-)</li>
+                <li>重新发布了<a href="http://10.226.110.123:1204">决策服务数据集</a></li>
+            </ol>
+        <li><b>2014-01-21</b></li>
+            <ol>
+                <li>增加了<b>降水</b>，包括累计降水和不同等级降水日数</li>
+                <li>修改了用户须知，增加了关于全市平均的说明</li>
+                <li>修正了气温计算的一处错误，感谢小薛的一个测试结果</li>
+                <li>修正了数据文件编码问题，确保中文正确显示，感谢芳姐的建议</li>
+                <li>网页刷新后下拉菜单和按钮不能保持已选项，一直寻求解决中，感谢李春指出的问题</li>
+                <li>关于网页和表单的修改，持续进行中，感谢高工和郭主任的建议</li>
+                <li>感谢郭晶、杨哥、马宁、娟姐、阿福、明明和刘姐的测试:-)</li>
+            </ol>
+        <li><b>2014-01-14</b></li>
+            <ol>
+                <li>发布第一个测试版本，包括<b>天气现象</b>和<b>气温</b></li>
+            </ol>
+            </ol>
+    </ul>
+    <h2>读我</h2>
+    <ul>
+        <li><b>功能定位</b></li>
+            <ul>
+                <li>单站、所有站和全市平均，任意时段，历史同期，某天气气候要素统计</li>
+                <li>统计、绘图、生成可供下载的、方便编辑的数据文件，一站式服务</li>
+            </ul>
+        <li><b>用户须知</b></li>
+            <ul>
+                <li>用户端：任意网页浏览器，虽然支持 IE 类，但为更好的用户体验以及减轻服务器负担，</br>
+                    推荐使用 <a href="http://www.google.com/intl/zh-CN/chrome/">Chrome</a> |
+                    <a href="http://www.opera.com/zh-cn">Opera</a> |
+                    <a href="http://www.firefox.com.cn/download/">Firefox</a> |
+                    <a href="http://support.apple.com/kb/DL1531?viewlocale=zh_CN">Safari</a>
+                <li>统计时段跨年：如设置起始日期晚于截止日期，例“12 月 1 日”至“2 月 28 日”</li>
+                <li>全市平均：不仅返回全市平均统计值，所有站统计值一并返回，详见返回的数据文件</li>
+                <li>缺测：统计时段如遇缺漏月份或日值缺测率大于等于 1/4，则当年该时段统计值以 32766 表示</li>
+                <li>绘图：折线图和柱状图，折线图可选线型、颜色和标记，柱状图可选颜色，坐标轴标签可填写</li>
+                <li>数据下载：在数据连接位置鼠标右键另存为 txt 或 csv 文件即可，文件头行为数据信息</li>
+                <li>任务作业时间：主要耗时在 I/O，因此取决于任务量</li>
+                </li>
+            </ul>
+        <li><b>补充说明</b></li>
+            <ol>
+                <li>统计值单位：气温摄氏度、降水毫米、相对湿度 %、风速米每秒、日照小时，日数天</li>
+                <li>天气现象的统计须注意观测方式和标准的变更可导致序列不均一，而非统计错误</li>
+                <li>注意 1980 年之前几乎没有日最小相对湿度记录，本站计为缺测，非以定时观测的最小值代替</li>
+                <li>风速风向方面，暂只提供风速统计，风向的统计暂无</li>
+            </ol>
+    </ul>
+{% end %}

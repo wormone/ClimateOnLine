@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
-''' 常量和通用函数，调用方式如下：
-    from myfunctions import station,stationNo,stationName,stationNamelong,DATAPATH,\
-                            isleapyear,days36x,myrecodefile_utf8togbk,myplot
-'''
+''' 常量和通用函数 '''
 
 ###################################### 台站信息 ######################################
 meta = [

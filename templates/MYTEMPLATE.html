@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>气候分析与绘图在线服务</title>
+        <!--[if lte IE 10]><!-->
+        <link rel="stylesheet" href="{{ static_url('baseIE.css') }}" type="text/css"/>
+        <script type="text/javascript" src="{{ static_url('mainIE.js') }}"></script>
+        <!--<![endif]-->
+        <!--[if gte IE 11]><!-->
+        <link rel="stylesheet" href="{{ static_url('base.css') }}" type="text/css"/>
+        <link rel="stylesheet" href="{{ static_url('animate.css') }}" type="text/css"/>
+        <script type="text/javascript" src="{{ static_url('jquery-1.11.0.min.js') }}"></script>
+        <script type="text/javascript" src="{{ static_url('animate.js') }}"></script>
+        <script type="text/javascript" src="{{ static_url('main.js') }}"></script>
+        <!--<![endif]-->
+        <!--[if !IE]><!-->
+        <link rel="stylesheet" href="{{ static_url('base.css') }}" type="text/css"/>
+        <link rel="stylesheet" href="{{ static_url('animate.css') }}" type="text/css"/>
+        <script type="text/javascript" src="{{ static_url('jquery-1.11.0.min.js') }}"></script>
+        <script type="text/javascript" src="{{ static_url('animate.js') }}"></script>
+        <script type="text/javascript" src="{{ static_url('main.js') }}"></script>
+        <!--<![endif]-->
+        <script>{% block Script %}{% end %}</script>
+    </head>
+    <body onload="loadall();">
+    <!--
+        Call loadall(); to load the localStorage for the SELECT, INPUT and RADIO elements in main.html
+    -->
+        <div id="body">
+        <div id="content">
+            <form action="/" method="post" style="float:right;">
+                {% block Login %}{% end %}
+            </form>
+            <h1>气候分析与绘图在线服务</h1>
+            <div id="nav">
+                <a href="/" {% block nav_home %}{% end %}>主页</a>
+                <a href="/weather" {% block nav_weather %}{% end %}>天气现象</a>
+                <a href="/temperature" {% block nav_temperature %}{% end %}>气温</a>
+                <a href="/precipitation" {% block nav_precipitation %}{% end %}>降水</a>
+                <a href="/windspeed" {% block nav_windspeed %}{% end %}>风速风向</a>
+                <a href="/humidity" {% block nav_humidity %}{% end %}>相对湿度</a>
+                <a href="/sunshine" {% block nav_sunshine %}{% end %}>日照</a>
+            </div>
+        {% block Body %}{% end %}
+        <div id="footer">Copyleft @ 2013-2014 辈友文化</div>
+        </div>
+        </div>
+    </body>
+</html>

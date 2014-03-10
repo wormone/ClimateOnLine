@@ -1,7 +1,7 @@
 ClimateOnLine
 =============
 
-A Web App providing analyses and plotting of climate data from monthly record files
+一个提供气候数据（A0/A 文件）分析与绘图服务的 WebApp
 
 ## 简介
 

@@ -1,0 +1,143 @@
+{% extends "MYTEMPLATE.html" %}
+
+{% block Login %}
+    {% module xsrf_form_html() %}
+    欢迎:-) <a href="/user">{{ username }}</a> [<small>管理员<a href="/admin">走这</a></small>]
+	<input type="submit" value="退出">
+{% end %}
+
+{% block Body %}
+        <h2 id="h2name">{% block h2name %}{% end %}</h2>
+        <form action={% block fromaction %}{% end %} method="post" onsubmit="return(checkForm());">
+        {% module xsrf_form_html() %}
+        <table>
+            <tr>
+                <td align="right">*要素:</td>
+                <td align="left">
+                    <select id="element" name="element">
+                    <option value="please">请选择…</option>
+                    {% for i in MYelement %}
+                    <option value="{{ escape(i) }}">{{ escape(i) }}</option>
+                    {% end %}
+                    </select>
+                    <span id="mess_element" style="color:red;"></span>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">*站点:</td>
+                <td align="left"><select id="site" name="site"">
+                    <option value="please">请选择…</option>
+                    {% for i in stationName %}
+                    <option value="{{ i }}">{{ i }}</option>
+                    {% end %}
+                    </select>
+                    <span id="mess_site" style="color:red;"></span>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">*年限:</td>
+                <td align="left">
+                    <input type="number" min="1951" max="2100" required pattern="[0-9]{4}" id="startyear" name="startyear" size="6" value="{{ startyear }}" placeholder="1951"> 至
+                    <input type="number" min="1951" max="2100" required pattern="[0-9]{4}" id="endyear" name="endyear" size="6" value="{{ endyear }}" placeholder="YYYY">
+                    <span id="mess_year" style="color:red;"></span>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">*时段:</td>
+                <td align="left">
+                    <select id="period" name="period"">
+                        <option value="please">月季年请选择...</option>
+                        {% for i in range(1,13) %}
+                        <option value="{{ i }}">{{ i }}月</option>
+                        {% end %}
+                        {% for i in ["冬季","春季","夏季","秋季","全年"] %}
+                        <option value="{{ i }}">{{ i }}</option>
+                        {% end %}
+                    </select> 或  
+                    <input type="number" min="1" max="12" id="startmonth" name="startmonth" size="2" value="{{ startmonth }}" placeholder="月">
+                    <input type="number" min="1" max="31" id="startday" name="startday" size="2" value="{{ startday }}" placeholder="日"> 至
+                    <input type="number" min="1" max="12" id="endmonth" name="endmonth" size="2" value="{{ endmonth }}" placeholder="月">
+                    <input type="number" min="1" max="31" id="endday" name="endday" size="2" value="{{ endday }}" placeholder="日">
+                    <span id="mess_date" style="color:red;"></span>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">图型:</td>
+                <td align="left"><div class="radio-toolbar">
+                                <input type="radio" name="Shape" id="Shape0" value="plot" checked>
+                                <label for="Shape0">折线</label>
+                                <input type="radio" name="Shape" id="Shape1" value="bar">
+                                <label for="Shape1">柱状</label></div></td>
+            </tr>
+            <tr>
+                <td align="right">线状:</td>
+                <td align="left"><div class="radio-toolbar">
+                                <input type="radio" name="Line" id="Line0" value="solid" checked>
+                                <label for="Line0">实线</label>
+                                <input type="radio" name="Line" id="Line1" value="dashed">
+                                <label for="Line1">虚线</label>
+                                <input type="radio" name="Line" id="Line2" value="dotted">
+                                <label for="Line2">点线</label>
+                                <input type="radio" name="Line" id="Line3" value="dashdot">
+                                <label for="Line3">点划</label>
+                                <input type="radio" name="Line" id="Line4" value="none">
+                                <label for="Line4">无</label></div></td>
+            </tr>
+            <tr>
+                <td align="right">颜色:</td>
+                <td align="left"><div class="radio-toolbar">
+                                <input type="radio" name="Color" id="Color0" value="k" checked>
+                                <label for="Color0" style="color:black;">黑</label>
+                                <input type="radio" name="Color" id="Color1" value="r">
+                                <label for="Color1" style="color:red;">红</label>
+                                <input type="radio" name="Color" id="Color2" value="b">
+                                <label for="Color2" style="color:blue;">蓝</label>
+                                <input type="radio" name="Color" id="Color3" value="y">
+                                <label for="Color3" style="color:yellow;">黄</label>
+                                <input type="radio" name="Color" id="Color4" value="c">
+                                <label for="Color4" style="color:cyan;">青</label>
+                                <input type="radio" name="Color" id="Color5" value="m">
+                                <label for="Color5" style="color:magenta;">紫</label>
+                                <input type="radio" name="Color" id="Color6" value="g">
+                                <label for="Color6" style="color:green;">绿</label>
+                                <input type="radio" name="Color" id="Color7" value="none">
+                                <label for="Color7" style="color:gray;">白</label></div></td>
+            </tr>
+            <tr>
+                <td align="right">标记:</td>
+                <td align="left"><div class="radio-toolbar">
+                                <input type="radio" name="Data" id="Data0" value="circle" checked>
+                                <label for="Data0">圆圈</label>
+                                <input type="radio" name="Data" id="Data1" value="dot">
+                                <label for="Data1">圆点</label>
+                                <input type="radio" name="Data" id="Data2" value="square">
+                                <label for="Data2">方块</label>
+                                <input type="radio" name="Data" id="Data3" value="triangle_up">
+                                <label for="Data3">三角</label>
+                                <input type="radio" name="Data" id="Data4" value="plus">
+                                <label for="Data4">加号</label>
+                                <input type="radio" name="Data" id="Data5" value="x">
+                                <label for="Data5">叉号</label>
+                                <input type="radio" name="Data" id="Data6" value="star">
+                                <label for="Data6">星号</label>
+                                <input type="radio" name="Data" id="Data7" value="none">
+                                <label for="Data7">无</label></div></td>
+            </tr>
+            <tr>
+                <td align="right">X 轴标签:</td>
+                <td align="left"><input type="text" id="labelx" name="labelx" size="30" value="{{ labelx }}" placeholder="年份"></td>
+            </tr>
+            <tr>
+                <td align="right">Y 轴标签:</td>
+                <td align="left"><input type="text" id="labley" name="labely" size="30" value="{{ labely }}" placeholder="气温°C/...日数/降水mm/..."></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td align="left"><input type="submit" value="提交">
+                <span class="animated flash">{{ hint }}</span></td>
+            </tr>
+        </table>
+        </form>
+        <img name="myimg" src="{{ static_url(userplot) }}" style="border:0;width:400pt;height:300pt" />
+        <p>数据下载：请鼠标右键点击<a href="{{ static_url(userfile) }}">这里</a>另存为 *.csv 文件:-)</p>
+{% end %}

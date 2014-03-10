@@ -7,7 +7,7 @@ ClimateOnLine
 
 * 一个简单的 WebApp，基于 python Tornado 框架
 * Tornado 本就是一个轻量级的 Web 框架，这个应用更是轻量级中的轻量级
-* 核心是文本数据的处理、计算、读写、绘图，采用的关键模块包括 re、os、numpy、matplotlib 等
+* 核心是文本数据的处理、计算、读写、绘图，采用的关键模块包括 re、numpy、matplotlib 等
 * 还包括了一个自编的超轻量级的用户管理功能，采用了 redis 数据库
 
 ## 源文件简要说明

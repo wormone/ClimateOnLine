@@ -1,23 +1,15 @@
 # -*- coding: utf-8 -*-
-''' 常量和通用函数 '''
+''' 常量和通用函数
+    注有【### 仅示例】的参数仅为示例，并非全部数据或真实数据，仅供参考
+'''
 
 ###################################### 台站信息 ######################################
 meta = [
-"蓟县,54428",
-"宝坻,54525",
-"武清,54523",
-"宁河,54529",
-"静海,54619",
 "西青,54527",
-"北辰,54528",
 "市区,54517",
-"东丽,54526",
-"津南,54622",
-"大港,54645",
-"汉沽,54530",
-"塘沽,54623",
 "全市平均,99999"
 ]
+### 仅示例
 
 
 ###################################### 台站处理 ######################################
@@ -42,11 +34,11 @@ station,stationName,stationNo,stationNamelong = myStation(meta)
 def myDatapath():
     import os
     if os.name == 'nt':
-        DATAPATH = r"\\10.226.110.225\qhzl\Afiles"
-        myfontfile = r'C:\WINDOWS.0\Fonts\msyh.ttf'
+        DATAPATH = r"D:\Afiles"                    ### 仅示例
+        myfontfile = r'C:\WINDOWS\Fonts\msyh.ttf'  ### 仅示例
     elif os.name == 'posix':
-        DATAPATH = "/mnt/225Afiles"
-        myfontfile = '/usr/share/fonts/msyh/msyh.ttf'
+        DATAPATH = "/home/user/Afiles"             ### 仅示例
+        myfontfile = '/home/user/msyh.ttf'         ### 仅示例
     return DATAPATH,myfontfile
 # 调用生成数据路径
 DATAPATH,myfontfile = myDatapath()
@@ -56,16 +48,16 @@ DATAPATH,myfontfile = myDatapath()
 ''' 定义 redis 连接 '''
 def myRedis():
     import redis
-    r = redis.StrictRedis(host="localhost", password='barfoo', port=6379, db=0)
+    r = redis.StrictRedis(host="localhost", password='mypassword', port=6379, db=0)   ### 仅示例
     return r
 
 ''' 定义设置路径的函数 '''
 def myPaths():
     import os
     if os.name == 'nt':
-        home_path = r'D:\mytornado'
+        home_path = r'D:\myproject'           ### 仅示例
     elif os.name == 'posix':
-        home_path = r'/home/oracle/mytornado/'
+        home_path = r'/home/user/myproject/'  ### 仅示例
     static_path = os.path.join(home_path, 'static')
     template_path = os.path.join(home_path, 'templates')
     return home_path,static_path,template_path

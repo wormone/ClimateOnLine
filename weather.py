@@ -85,7 +85,7 @@ def myreadaW0(filename,weathercode):
 
 ''' 定义计算任意时段【历史同期】某种天气现象出现次数的函数 myreadaW0para，调用方式如下
     stationnumber = station.get("蓟县")
-    startyear = int('1951')
+    startyear = int('1961')
     endyear = int('2013')
     startmonth = int('1')
     endmonth = int('12')
